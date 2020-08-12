@@ -1,3 +1,1 @@
-<IfModule mod_headers.c>
-   Header set Server "CSE135 Server"
-</IfModule>
+Header set Server "CSE135 Server"

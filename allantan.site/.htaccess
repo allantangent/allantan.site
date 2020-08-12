@@ -1,1 +1,1 @@
-Header set Server "CSE135 Server"
+ErrorDocument 404 /404.html

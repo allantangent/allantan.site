@@ -6,14 +6,22 @@
   <title>GET Echo</title>
 </head>
 <body>
+  <head>
+    <h1>GET query string</h1>
+  </head>
+  <hr />
   <?php
     $qString = $_SERVER['QUERY_STRING'];
     echo "Raw query string: " . $qString;
     echo "<br />";
     echo "Formatted Query String: ";
+    echo "<br />";
     parse_str($qString, $result);
     foreach($result as $item => $item_val) {
-      echo $item . ": " . $item_val;
+      if($item_val) {
+        echo $item . ": " . $item_val;
+        echo "<br />";
+      }
     }
   ?>
 </body>

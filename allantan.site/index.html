@@ -24,15 +24,29 @@
       margin-right: 1em;
     }
 
-    section ul {
-      background-color: lightgray;
-      padding: 1em;
-    }
-
     section li {
       padding-top: 3px;
       padding-bottom: 3px;
       margin-left: 1em;
+    }
+
+    .hw1List {
+      background-color: lightgray;
+      padding: 1em;
+    }
+
+    .filesList {
+      background-color: lightgray;
+      margin-top: 0;
+      padding: 1em;
+    }
+
+    .filesList ul {
+      padding-left: 1em;
+    }
+
+    .listHeader {
+      margin: 0;
     }
   </style>
 </head>
@@ -55,7 +69,7 @@
   <main>
     <section>
       <h1>Homework 1</h1>
-      <ul>
+      <ul class="hw1List">
         <li>
           <a href="./hw1/hello.php">PHP</a>
         </li>
@@ -66,11 +80,29 @@
     </section>
     <section>
       <h1>Homework 2</h1>
-      <p>TDB</p>
+      <section class="filesList">
+        <h1 class="listHeader">Perl</h1>
+        <ul>
+          <li><a href="./cgi-bin/perl-html-world.pl">Hello, Perl!</a></li>
+          <li><a href="./cgi-bin/perl-json-world.pl">Hello, Perl! (JSON)</a></li>
+          <li><a href="./cgi-bin/perl-env.pl">Environment Variables (Manually)</a></li>
+          <li><a href="./cgi-bin/perl-env.pl">Environment Variables (CGI.pm)</a></li>
+          <li><a href="./cgi-bin/perl-get-echo.pl">GET Echo</a></li>
+          <li><a href="./cgi-bin/perl-post-echo.pl">POST Echo</a></li>
+          <li><a href="./cgi-bin/perl-general-echo.pl">General Echo</a></li>
+          <li><a href="./cgi-bin/perl-sessions-1.pl">Sessioning</a></li>
+        </ul>
+      </section>
+      <section class="filesList">
+        <h1 class="listHeader">C</h1>
+        <ul>
+          <li><a href="./cgi-bin/c-hello-html-world.cgi">Hello, C!</a></li>
+        </ul>
+      </section>
     </section>
     <section>
       <h1>Analytics App</h1>
-      <p>TDB</p>
+      <p>TBD</p>
     </section>
     <section style="bottom: 1em; position: absolute; left: 50%">
       <p>deploying from github</p>

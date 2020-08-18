@@ -9,7 +9,7 @@
   <h1>Hello, PHP!</h1>
   <?php 
     print "Current time: ";
-    print getdate();
+    print date();
     echo "<br />";
     print "Your IP Address: ";
     print $_SERVER['REMOTE_ADDR'];

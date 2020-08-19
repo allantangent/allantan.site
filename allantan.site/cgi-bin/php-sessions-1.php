@@ -1,6 +1,4 @@
 <?php
-  header("Cache-Control: no-cache");
-  header("Content-type: text/html");
   if(empty($_SESSION)) {
     session_start();
   }

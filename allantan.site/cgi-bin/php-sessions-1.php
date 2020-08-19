@@ -18,7 +18,7 @@
       $name = $_SESSION["name"];
     }
 
-    echo $_POST;
+    echo implode(",", $_POST);
     
     echo "<p><b>Name: </b>" . $name . "</p>";
     echo "<br />";

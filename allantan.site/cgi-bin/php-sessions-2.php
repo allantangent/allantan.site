@@ -17,8 +17,8 @@
     if($_SESSION["name"]) {
       $name = $_SESSION["name"];
     }
-    echo "<p><b>Name: </b>" . $name . "</p>"
-    echo "<br />"
+    echo "<p><b>Name: </b>" . $name . "</p>";
+    echo "<br />";
   ?>
   <a href="./php-sessions-1.php">Session Page 1</a>
   <a href="../php-cgiform.html">PHP CGI Form</a>

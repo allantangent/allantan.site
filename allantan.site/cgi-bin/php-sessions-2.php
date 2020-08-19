@@ -1,6 +1,5 @@
 <?php
-  header("Cache-Control: no-cache");
-  header("Content-type: text/html");
+  session_start();
 ?>
 
 <!DOCTYPE html>
@@ -14,8 +13,12 @@
   <h1>PHP Sessions Page 2</h1>
   <?php
     $name = "You do not have a name set";
-    if(isset($_SESSION["name"])) {
+    if(!isset($_SESSION["name"])) {
+      $_SESSION["name"] = $_POST['username'];
       $name = $_SESSION["name"];
+    }
+    if(!isset($name)) {
+      $name = "You do not have a name set";
     }
     echo "<p><b>Name: </b>" . $name . "</p>";
     echo "<br />";

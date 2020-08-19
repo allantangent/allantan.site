@@ -17,6 +17,9 @@
       $_SESSION["name"] = $_POST['username'];
       $name = $_SESSION["name"];
     }
+    if(!isset($name)) {
+      $name = "You do not have a name set";
+    }
     echo "<p><b>Name: </b>" . $name . "</p>";
     echo "<br />";
   ?>

@@ -1,9 +1,9 @@
 #!/usr/bin/python
 from datetime import datetime
 import cgi
-import html
 import os
 
+print ("Cache-Control: no-cache\n")
 print ("Content-type:text/html\r\n\r\n")
 print ('<html>')
 print ('<head>')
@@ -13,6 +13,6 @@ print ('<body>')
 print ('<h1>Hello, Python!</h1>')
 print ('<p>Current time: ' + datetime.now() + '</p>')
 print ('<br />')
-print ('Your IP address is: ' + html.escape(os.environ["REMOTE_ADDR"]))
+print ('<p>Your IP address is: ' + cgi.escape(os.environ["REMOTE_ADDR"]) + '</p>')
 print ('</body>')
 print ('</html>')

@@ -17,7 +17,7 @@ else:
   name = cookie['name'].value
 
 print('Cache-Control: no-cache;')
-print('Set-Cookie:session = ' + sid)
+print('Set-Cookie:sid = ' + sid)
 print('Content-type: text/html\r\n\r\n')
 print ('<html>')
 print ('<head>')
@@ -30,7 +30,7 @@ if name is None:
   name = 'You do not have a name set'
 
 print('<p><b>Name:</b> %s' % name)
-
+print('<br />')
 print ('<a href=\'./py-sessions-2.py\'>Session Page 2</a><br/>')
 print ('<a href=\'../py-cgiform.html\'>Python CGI Form</a><br />')
 print ('<form style=\'margin-top:30px\' action=\'./py-destroy-session.py\' method=\'get\'>')

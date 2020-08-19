@@ -25,7 +25,8 @@ else:
     sid = cookie['sid'].value
     name = cookie['name'].value
   except:
-    
+    name = "You do not have a name set"
+
 print('Cache-Control: no-cache;')
 print('Content-type: text/html\r\n\r\n')
 print ('<html>')

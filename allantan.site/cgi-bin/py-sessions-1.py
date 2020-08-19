@@ -2,6 +2,16 @@
 import cgi
 import os
 
+def inSession():
+  if os.environ.has_key('HTTP_COOKIE'):
+    for cookie in map(strip, os.environ['HTTP_COOKIE'].split(';')):
+      (key, value) = cookie.split('=')
+      if key == "session":
+        val = value
+    if val > 0:
+      return True
+  return False
+
 name = "You do not have a name set"
 print('Cache-Control: no-cache;')
 if(not inSession() and cgi.FieldStorage()['username'].value is not None):
@@ -29,13 +39,3 @@ print ('</form>')
 
 print ('</body>')
 print ('</html>')
-
-def inSession():
-  if os.environ.has_key('HTTP_COOKIE'):
-    for cookie in map(strip, os.environ['HTTP_COOKIE'].split(';')):
-      (key, value) = cookie.split('=')
-      if key == "session":
-        val = value
-    if val > 0:
-      return True
-  return False

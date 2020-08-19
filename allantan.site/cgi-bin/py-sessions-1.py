@@ -20,9 +20,15 @@ if os.environ['REQUEST_METHOD'] == 'POST':
 
   print(cookie)
 else:
-  cookie.load(string_cookie)
-  sid = cookie['sid'].value
-  name = cookie['name'].value
+  try:
+    cookie.load(string_cookie)
+    sid = cookie['sid'].value
+    name = cookie['name'].value
+  except:
+    sid = hashlib.sha256((repr(time.time())).encode('utf-8')).hexdigest()
+    cookie['sid'] = sid
+    cookie['name'] = cgi.FieldStorage()['username'].value
+    print(cookie)
 
 print('Cache-Control: no-cache;')
 print('Content-type: text/html\r\n\r\n')

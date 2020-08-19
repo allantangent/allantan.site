@@ -7,7 +7,7 @@ cookie = cookies.SimpleCookie()
 string_cookie = os.environ.get('HTTP_COOKIE')
 cookie.load(string_cookie)
 cookie['sid']['expires'] = 0
-cookie['name'] = None
+cookie['name']['expires'] = 0
 print(cookie)
 
 print('Cache-Control: no-cache;')

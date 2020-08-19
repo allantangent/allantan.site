@@ -17,8 +17,8 @@ print ('<p><b>Query String:</b> ' + os.environ['QUERY_STRING'] + '</p>')
 
 qString = cgi.FieldStorage()
 print ('<p><b>Message Body:</b> ' +  '</p>')
-print ('', qString)
 if qString is not None:
+  print('true')
   for key in qString:
     if key is not None:
       print('<p>%s: %s</p>' % (key, qString[key].value))

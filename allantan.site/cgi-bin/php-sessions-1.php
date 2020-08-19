@@ -1,5 +1,6 @@
 <?php
   session_start();
+  print_r($_POST);
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +18,6 @@
       $_SESSION["name"] = $_POST["username"];
       $name = $_SESSION["name"];
     }
-    print_r($_POST);
     echo "<p><b>Name: </b>" . $name . "</p>";
     echo "<br />";
   ?>

@@ -20,14 +20,16 @@
       $_SESSION["name"] = $_POST["username"];
     }
     $name = "You do not have a name set";
-    if($_SESSION["name"]) {
+    if(isset($_SESSION["name"])) {
       $name = $_SESSION["name"];
     }
     echo "<p><b>Name: </b>" . $name . "</p>";
     echo "<br />";
   ?>
   <a href="./php-sessions-2.php">Session Page 2</a>
+  <br />
   <a href="../php-cgiform.html">PHP CGI Form</a>
+  <br />
   <br />
   <form action="./php-destroy-session.php" method="get">
     <button type="submit">Destroy Session</button>

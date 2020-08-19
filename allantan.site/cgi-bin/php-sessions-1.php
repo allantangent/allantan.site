@@ -1,7 +1,5 @@
 <?php
-  if(empty($_SESSION)) {
-    session_start();
-  }
+  session_start();
 ?>
 
 <!DOCTYPE html>
@@ -14,13 +12,14 @@
 <body>
   <h1>PHP Sessions Page 1</h1>
   <?php
-    if(empty($_SESSION)) {
-      
-    }
-    $_SESSION["name"] = $_POST["username"];
-    if(isset($_SESSION["name"])) {
+    $name = "You do not have a name set";
+    if(!isset($_SESSION["name"])) {
+      $_SESSION["name"] = $_POST["username"];
       $name = $_SESSION["name"];
     }
+
+    echo $_POST;
+    
     echo "<p><b>Name: </b>" . $name . "</p>";
     echo "<br />";
   ?>

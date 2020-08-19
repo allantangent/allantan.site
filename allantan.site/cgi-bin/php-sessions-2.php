@@ -12,7 +12,7 @@
 <body>
   <h1>PHP Sessions Page 2</h1>
   <?php
-    $name = $_SESSION['username'];
+    $name = $_SESSION['name'];
     if(!isset($name)) {
       $name = "You do not have a name set";
     }

@@ -1,22 +1,22 @@
 #!/usr/bin/python3
 import cgi
 import os
+import sha, time, Cookie
 
-def inSession():
-  if os.environ.has_key('HTTP_COOKIE'):
-    for cookie in map(strip, os.environ['HTTP_COOKIE'].split(';')):
-      (key, value) = cookie.split('=')
-      if key == "session":
-        val = value
-    if val > 0:
-      return True
-  return False
-
+cookie = Cookie.SimpleCookie()
+string_cookie = os.environ.get('HTTP_COOKIE')
 name = "You do not have a name set"
+if not string_cookie:
+  sid = sha.new(repr(time.time())).hexdigest()
+  cookie['sid'] = sid
+  cookie['name'] = cgi.FieldStorage()['username'].value
+else:
+  cookie.load(string_cookie)
+  sid = cookie['sid'].value
+  name = cookie['name'].value
+  
 print('Cache-Control: no-cache;')
-if(not inSession() and cgi.FieldStorage()['username'].value is not None):
-  print('Set-Cookie:session = ' + cgi.FieldStorage()['username'].value)
-
+print('Set-Cookie:session = ' + sid)
 print('Content-type: text/html\r\n\r\n')
 print ('<html>')
 print ('<head>')
@@ -25,7 +25,6 @@ print ('</head>')
 print ('<body>')
 print ('<h1>Python Sessions Page 1</h1>')
 
-name = cgi.FieldStorage()['username'].value
 if name is None:
   name = 'You do not have a name set'
 

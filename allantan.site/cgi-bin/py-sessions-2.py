@@ -13,7 +13,6 @@ else:
   sid = cookie['sid'].value
   name = cookie['name'].value
 
-name = cookie['name'].value
 print('Cache-Control: no-cache;')
 print(cookie)
 print('Content-type: text/html\r\n\r\n')
@@ -24,7 +23,9 @@ print ('</head>')
 print ('<body>')
 print ('<h1>Python Sessions Page 2</h1>')
 
-if name is None:
+try:
+  name = cookie['name'].value
+except:
   name = 'You do not have a name set'
 
 print('<p><b>Name:</b> %s' % name)

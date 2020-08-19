@@ -17,7 +17,7 @@ qString = cgi.FieldStorage()
 print ('<p>Formatted Query String:' +  '</p>')
 for key in qString:
   if key:
-    print('<p>' + key + ': ' + qString[key] + '</p>')
+    print('<p>%s: %s</p>' % (key, qString[key]))
 
 print ('</body>')
 print ('</html>')

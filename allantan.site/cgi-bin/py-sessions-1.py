@@ -1,20 +1,21 @@
 #!/usr/bin/python3
 import cgi
 import os
-import sha, time, Cookie
+import hashlib, time
+from http import cookies
 
-cookie = Cookie.SimpleCookie()
+cookie = cookies.SimpleCookie()
 string_cookie = os.environ.get('HTTP_COOKIE')
 name = "You do not have a name set"
 if not string_cookie:
-  sid = sha.new(repr(time.time())).hexdigest()
+  sid = hashlib.new(repr(time.time())).hexdigest()
   cookie['sid'] = sid
   cookie['name'] = cgi.FieldStorage()['username'].value
 else:
   cookie.load(string_cookie)
   sid = cookie['sid'].value
   name = cookie['name'].value
-  
+
 print('Cache-Control: no-cache;')
 print('Set-Cookie:session = ' + sid)
 print('Content-type: text/html\r\n\r\n')

@@ -6,8 +6,8 @@ from http import cookies
 cookie = cookies.SimpleCookie()
 string_cookie = os.environ.get('HTTP_COOKIE')
 cookie.load(string_cookie)
-cookie['sid'] = ''
-cookie['name'] = ''
+cookie['sid'] = None
+cookie['name'] = None
 print(cookie)
 
 print('Cache-Control: no-cache;')

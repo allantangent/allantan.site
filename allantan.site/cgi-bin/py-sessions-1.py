@@ -7,18 +7,22 @@ from http import cookies
 cookie = cookies.SimpleCookie()
 string_cookie = os.environ.get('HTTP_COOKIE')
 name = "You do not have a name set"
-if not string_cookie:
-  sid = hashlib.sha256((repr(time.time())).encode('utf-8')).hexdigest()
-  cookie['sid'] = sid
-  cookie['name'] = cgi.FieldStorage()['username'].value
-else:
-  cookie.load(string_cookie)
-  sid = cookie['sid'].value
-  name = cookie['name'].value
+
+if cgi.FieldStorage()['username'].value is not None:
+  if not string_cookie:
+    sid = hashlib.sha256((repr(time.time())).encode('utf-8')).hexdigest()
+    cookie['sid'] = sid
+    cookie['name'] = cgi.FieldStorage()['username'].value
+  else:
+    cookie.load(string_cookie)
+    sid = cookie['sid'].value
+    name = cookie['name'].value
+
+  print(cookie)
 
 name = cookie['name'].value
+
 print('Cache-Control: no-cache;')
-print(cookie)
 print('Content-type: text/html\r\n\r\n')
 print ('<html>')
 print ('<head>')

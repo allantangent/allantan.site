@@ -16,6 +16,7 @@ else:
   sid = cookie['sid'].value
   name = cookie['name'].value
 
+name = cookie['name']
 print('Cache-Control: no-cache;')
 print(cookie)
 print('Content-type: text/html\r\n\r\n')

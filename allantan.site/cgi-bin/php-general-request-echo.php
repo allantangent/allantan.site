@@ -18,10 +18,10 @@
 
 <?php
   $reqMethod = $_SERVER['REQUEST_METHOD'];
-  echo "<p><b>HTTP Protocol: </b>" . $_SERVER['SERVER_PROTOCOL'] . "</p>"
-  echo "<p><b>HTTP Method: </b>" . $reqMethod . "</p>"
-  echo "<p><b>Query String: </b>" . $_SERVER['QUERY_STRING'] . "</p>"
-  echo "<p><b>Message Body: </b></p>"
+  echo "<p><b>HTTP Protocol: </b>" . $_SERVER['SERVER_PROTOCOL'] . "</p>";
+  echo "<p><b>HTTP Method: </b>" . $reqMethod . "</p>";
+  echo "<p><b>Query String: </b>" . $_SERVER['QUERY_STRING'] . "</p>";
+  echo "<p><b>Message Body: </b></p>";
   $reqArr = $_GET;
   if($reqMethod === 'POST') {
     $reqArr = $_POST;

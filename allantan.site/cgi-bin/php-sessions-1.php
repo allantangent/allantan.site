@@ -1,6 +1,5 @@
 <?php
   session_start();
-  print_r($_POST);
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +14,7 @@
   <?php
     $name = "You do not have a name set";
     if(!isset($_SESSION["name"])) {
-      $_SESSION["name"] = $_POST["username"];
+      $_SESSION["name"] = $_POST['username'];
       $name = $_SESSION["name"];
     }
     echo "<p><b>Name: </b>" . $name . "</p>";

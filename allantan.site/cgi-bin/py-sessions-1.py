@@ -32,10 +32,10 @@ print ('</html>')
 
 def inSession():
   if os.environ.has_key('HTTP_COOKIE'):
-   for cookie in map(strip, split(os.environ['HTTP_COOKIE'], ';')):
-      (key, value ) = split(cookie, '=')
+    for cookie in map(strip, os.environ['HTTP_COOKIE'].split(';')):
+      (key, value) = cookie.split('=')
       if key == "session":
-         val = value
+        val = value
     if val > 0:
       return True
   return False

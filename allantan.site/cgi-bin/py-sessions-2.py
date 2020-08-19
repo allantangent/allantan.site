@@ -14,7 +14,6 @@ else:
   name = cookie['name'].value
 
 print('Cache-Control: no-cache;')
-print(cookie)
 print('Content-type: text/html\r\n\r\n')
 print ('<html>')
 print ('<head>')

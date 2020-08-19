@@ -1,9 +1,16 @@
 #!/usr/bin/python3
 import cgi
 import os
+from http import cookies
+
+cookie = cookies.SimpleCookie()
+string_cookie = os.environ.get('HTTP_COOKIE')
+cookie.load(string_cookie)
+cookie['sid'] = ''
+cookie['name'] = ''
+print(cookie)
 
 print('Cache-Control: no-cache;')
-print('Set-Cookie: ')
 print('Content-type: text/html\r\n\r\n')
 print ('<html>')
 print ('<head>')

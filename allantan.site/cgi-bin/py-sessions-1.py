@@ -20,8 +20,6 @@ if os.environ['REQUEST_METHOD'] == 'POST':
 
   print(cookie)
 
-name = cookie['name'].value
-
 print('Cache-Control: no-cache;')
 print('Content-type: text/html\r\n\r\n')
 print ('<html>')
@@ -31,7 +29,9 @@ print ('</head>')
 print ('<body>')
 print ('<h1>Python Sessions Page 1</h1>')
 
-if name is None:
+try:
+  name = cookie['name'].value
+except:
   name = 'You do not have a name set'
 
 print('<p><b>Name:</b> %s' % name)

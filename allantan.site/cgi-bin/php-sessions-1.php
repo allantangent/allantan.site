@@ -17,9 +17,7 @@
       $_SESSION["name"] = $_POST["username"];
       $name = $_SESSION["name"];
     }
-
-    echo implode(",", $_REQUEST);
-    
+    print_r($_POST);
     echo "<p><b>Name: </b>" . $name . "</p>";
     echo "<br />";
   ?>

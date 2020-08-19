@@ -12,10 +12,7 @@
 <body>
   <h1>PHP Sessions Page 2</h1>
   <?php
-    if(!isset($_SESSION["name"])) {
-      $_SESSION["name"] = $_POST['username'];
-      $name = $_SESSION["name"];
-    }
+    $name = $_SESSION['username'];
     if(!isset($name)) {
       $name = "You do not have a name set";
     }

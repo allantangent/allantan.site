@@ -6,7 +6,7 @@ from http import cookies
 cookie = cookies.SimpleCookie()
 string_cookie = os.environ.get('HTTP_COOKIE')
 cookie.load(string_cookie)
-cookie['sid'] = None
+cookie['sid']['expires'] = 0
 cookie['name'] = None
 print(cookie)
 

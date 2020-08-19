@@ -17,8 +17,9 @@
   <h1>PHP Sessions Page 1</h1>
   <?php
     if(empty($_SESSION)) {
-      $_SESSION["name"] = $_POST["username"];
+      
     }
+    $_SESSION["name"] = $_POST["username"];
     if(isset($_SESSION["name"])) {
       $name = $_SESSION["name"];
     }

@@ -3,7 +3,6 @@ from datetime import datetime
 import cgi
 import os
 
-print ("Cache-Control: no-cache\n")
 print ("Content-type:text/html\r\n\r\n")
 print ('<html>')
 print ('<head>')

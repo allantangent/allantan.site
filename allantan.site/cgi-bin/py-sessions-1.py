@@ -8,8 +8,7 @@ cookie = cookies.SimpleCookie()
 string_cookie = os.environ.get('HTTP_COOKIE')
 name = "You do not have a name set"
 if not string_cookie:
-  idHash = hashlib.sha256()
-  sid = idHash.update(repr(time.time())).hexdigest()
+  sid = hashlib.sha256((repr(time.time())).encode('utf-8')).hexdigest()
   cookie['sid'] = sid
   cookie['name'] = cgi.FieldStorage()['username'].value
 else:

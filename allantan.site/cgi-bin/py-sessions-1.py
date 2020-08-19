@@ -25,11 +25,7 @@ else:
     sid = cookie['sid'].value
     name = cookie['name'].value
   except:
-    sid = hashlib.sha256((repr(time.time())).encode('utf-8')).hexdigest()
-    cookie['sid'] = sid
-    cookie['name'] = cgi.FieldStorage()['username'].value
-    print(cookie)
-
+    
 print('Cache-Control: no-cache;')
 print('Content-type: text/html\r\n\r\n')
 print ('<html>')

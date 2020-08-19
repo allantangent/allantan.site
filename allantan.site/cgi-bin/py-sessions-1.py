@@ -19,6 +19,10 @@ if os.environ['REQUEST_METHOD'] == 'POST':
     name = cookie['name'].value
 
   print(cookie)
+else:
+  cookie.load(string_cookie)
+  sid = cookie['sid'].value
+  name = cookie['name'].value
 
 print('Cache-Control: no-cache;')
 print('Content-type: text/html\r\n\r\n')

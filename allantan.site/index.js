@@ -21,20 +21,8 @@ app.options('*', function(req, res) {
 });
 
 // endpoints
-app.get('/:id', (req, res) => {
-	res.send('your id is: ' + req.params.id);
-});
-app.all('/', (req,res) => {
-	if(req.method === 'GET') {
-
-	} else if(req.method === 'POST') {
-
-	} else if(req.method === 'DELETE') {
-
-	} else if(req.method === 'PUT') {
-
-	}
-});
+const browserRoutes = require('./routes/browsers');
+app.use('/browsers', browserRoutes);
 
 server.listen(port, (err) => {
 	if (err) {

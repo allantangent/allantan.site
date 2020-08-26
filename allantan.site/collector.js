@@ -445,6 +445,19 @@ function reportPerf(measureName, data, customProperties = {}) {
     });
     // TODO: send payload to endpoint
     console.log(payload);
+
+    if(payload.metricName === "initialBrowserData") {
+	    console.log('posting initialBrowserData');
+	    let browserData = {};
+	    fetch('https://allantan.site/api/browsers', {
+		    method: 'POST',
+		    headers: {
+			    'Content-Type': 'application/json',
+		    },
+		    body: JSON.stringify(payload.data),
+	    })
+	    .then(response => console.log('success:', response.json()));
+    }
   });
 }
 

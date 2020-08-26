@@ -445,7 +445,7 @@ function reportPerf(measureName, data, customProperties = {}) {
     });
     // TODO: send payload to endpoint
     console.log(payload);
-
+    console.log('test');
     if(payload.metricName === "initialBrowserData") {
 	    console.log('posting initialBrowserData');
 	    let browserData = {};

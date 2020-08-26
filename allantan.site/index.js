@@ -1,13 +1,13 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+import express from 'express';
+import { json, urlencoded } from 'body-parser';
 const app = express();
 const server = require('http').Server(app);
 const port = 3000;
-const helmet = require('helmet');
+import helmet from 'helmet';
 
 app.use(helmet());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
@@ -21,7 +21,7 @@ app.options('*', function(req, res) {
 });
 
 // endpoints
-const endpointRoutes = require('./endpointRouter');
+import endpointRoutes from './endpointRouter';
 app.use('/browsers', endpointRoutes);
 app.use('/storage', endpointRoutes);
 app.use('/dataconsumption', endpointRoutes);
@@ -35,6 +35,7 @@ app.use('/clsfinal', endpointRoutes);
 app.use('/tbt', endpointRoutes);
 app.use('/navtiming', endpointRoutes);
 app.use('/networkinfo', endpointRoutes);
+app.use('/errors', endpointRoutes);
 
 server.listen(port, (err) => {
 	if (err) {
@@ -43,5 +44,5 @@ server.listen(port, (err) => {
 	console.log('Node Endpoints working :)');
 });
 
-module.exports = server;
+export default server;
 

@@ -142,20 +142,15 @@ router.all('/', (request, response, next) => {
         let dbase = db.db("hw3db");
         let obj = request.body;
         let collection = dbase.collection(obj.metricName.toLowerCase());
-        if(typeof obj.data !== 'object') {
-          let temp = obj.data;
-          obj.data = {
-            data: temp
-          }
-        }
         let insertedData = {
           data: obj.data,
           vitalsScore: obj.vitalsScore
         }
+        if(typeof insertedData.data !== 'object') {
+          insertedData.data = { data: insertedData.data };
+        }
         if(insertedData.vitalsScore == null) {
-          insertedData = {
-            data: obj.data
-          }
+          delete insertedData.vitalsScore
         }
         collection.insertOne(insertedData, (err, res) => {
           if(err) {

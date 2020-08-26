@@ -9,7 +9,9 @@ const MongoClient = mongodb.MongoClient;
 const url = 'mongodb://127.0.0.1:27017/';
 
 router.all('/:id', (req, res, next) => {
-  if(req.params.id.length != 12) {
+  try {
+    ObjectId(req.params.id)
+  } catch(err) {
     res.status(404).end('404 error. Try again.');
     return;
   }

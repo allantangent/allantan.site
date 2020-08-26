@@ -117,12 +117,8 @@ router.all('/', (request, response, next) => {
         } else {
           collectionName = request.baseUrl.substr(1);
         }
-        
-        let options = {
-          projection: { id: 1, data: 1, vitalsScore: {$ifNull: [1, 0]}}
-        }
         let collection = dbase.collection(collectionName);
-        collection.find({}, options).toArray((err, result) => {
+        collection.find().toArray((err, result) => {
           if(err) {
             console.log('toarr error', err);
           } else {
@@ -155,6 +151,11 @@ router.all('/', (request, response, next) => {
         let insertedData = {
           data: obj.data,
           vitalsScore: obj.vitalsScore
+        }
+        if(insertedData.vitalsScore == null) {
+          insertedData = {
+            data: insertedData.data
+          }
         }
         collection.insertOne(insertedData, (err, res) => {
           if(err) {

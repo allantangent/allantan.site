@@ -458,10 +458,7 @@ function reportPerf(measureName, data, customProperties = {}) {
 			    'Content-Type': 'application/json',
 		    },
 		    body: JSON.stringify(postData),
-	    })
-      .then(response => response.json())
-      .then(data => console.log('success: ', data))
-      .catch(error => console.log('error: ', error));
+	    });
     } else if(payload.metricName === "navigationTiming") {
 
     } else if(payload.metricName === "networkInformation") {

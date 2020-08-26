@@ -12,7 +12,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.all('/', (request, response, next) => {
-	if(req.method === 'GET') {
+	if(request.method === 'GET') {
     MongoClient.connect(url, (err, db) => {
       if(err) {
         console.log('DB error', err);
@@ -53,7 +53,7 @@ router.all('/', (request, response, next) => {
 			res.end(JSON.stringify(data["browsers"]));
     });
     */
-	} else if(req.method === 'POST') {
+	} else if(request.method === 'POST') {
     MongoClient.connect(url, (err, db) => {
       if(err) {
         console.log('DB error', err);
@@ -87,9 +87,9 @@ router.all('/', (request, response, next) => {
 			res.end(JSON.stringify(req.body));
     });
     */
-	} else if(req.method === 'DELETE') {
+	} else if(request.method === 'DELETE') {
 
-	} else if(req.method === 'PUT') {
+	} else if(request.method === 'PUT') {
 
 	}
 });

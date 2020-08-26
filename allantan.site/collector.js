@@ -451,41 +451,31 @@ function reportPerf(measureName, data, customProperties = {}) {
       data: payload.data,
     };
 
+    let routeStr = '';
+
     if(payload.metricName === "initialBrowserData") {
-	    fetch('https://allantan.site/api/browsers', {
+	    routeStr = 'browsers';
+    } else if(payload.metricName === "navigationTiming") {
+      routeStr = 'navtiming';
+    } else if(payload.metricName === "networkInformation") {
+      routeStr = 'networkinfo';
+    } else if(payload.metricName === "storageEstimate") {
+      routeStr = 'storage';     
+    } else if(payload.metricName === "dataConsumption") {
+      routeStr = 'dataconsumption';
+    } else if(payload.metricName.includes("ERROR:")) {
+      routeStr = 'errors';
+    } else {
+      routeStr = payload.metricName;
+    }
+
+    fetch('https://allantan.site/api/' + routeStr, {
 		    method: 'POST',
 		    headers: {
 			    'Content-Type': 'application/json',
 		    },
 		    body: JSON.stringify(postData),
 	    });
-    } else if(payload.metricName === "navigationTiming") {
-
-    } else if(payload.metricName === "networkInformation") {
-
-    } else if(payload.metricName === "storageEstimate") {
-      
-    } else if(payload.metricName === "fp") {
-      
-    } else if(payload.metricName === "fcp") {
-      
-    } else if(payload.metricName === "fid") {
-      
-    } else if(payload.metricName === "lcp") {
-      
-    } else if(payload.metricName === "lcpFinal") {
-      
-    } else if(payload.metricName === "cls") {
-      
-    } else if(payload.metricName === "clsFinal") {
-      
-    } else if(payload.metricName === "tbt") {
-      
-    } else if(payload.metricName === "dataConsumption") {
-      
-    } else if(payload.metricName.includes("ERROR:")) {
-
-    }
   });
 }
 

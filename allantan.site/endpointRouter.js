@@ -60,7 +60,7 @@ router.all('/:id', (req, res, next) => {
             res.status(404).end('404 error. Try again.');
             console.log('delete error', err);
           } else {
-            res.status(200).end(JSON.stringify(result));
+            res.status(200).end(JSON.stringify(result.value));
           }
         });
       }
@@ -77,7 +77,7 @@ router.all('/:id', (req, res, next) => {
         let options = {
           returnOriginal: false
         }
-        dbase.collection(req.body.name.toLowerCase()).findOneAndUpdate( {"_id": ObjectId(req.params.id) }, 
+        dbase.collection(req.body.metricName.toLowerCase()).findOneAndUpdate( {"_id": ObjectId(req.params.id) }, 
         newVal, options, (err, result) => {
           if(err) {
             res.status(404).end('404 error. Try again.');
@@ -136,8 +136,8 @@ router.all('/', (request, response, next) => {
         console.log('DB success');
         let dbase = db.db("hw3db");
         let obj = request.body;
-        let collection = dbase.collection(obj.name.toLowerCase());
-        collection.insertOne(obj.data, (err, res) => {
+        let collection = dbase.collection(obj.metricName.toLowerCase());
+        collection.insertOne(JSON.parse(obj.data), (err, res) => {
           if(err) {
             console.log('insert error', err);
           } else {

@@ -33,7 +33,7 @@ router.all('/:id', (req, res, next) => {
             console.log('get error', err);
           } else {
             res.status(200);
-            res.json(result.value);
+            res.json(result);
           }
         });
       }

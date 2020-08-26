@@ -30,7 +30,7 @@ router.all('/:id', (req, res, next) => {
         let foundItem = dbase.collection(collectionName).find(ObjectId(req.params.id));
         if(foundItem) {
           foundItem.toArray((err, result) => {
-            res.end(JSON.stringify(result[0]));
+            res.json(result[0]);
           });
         } else {
           res.statusCode(404).end();
@@ -60,7 +60,8 @@ router.all('/:id', (req, res, next) => {
             res.status(404).end('404 error. Try again.');
             console.log('delete error', err);
           } else {
-            res.status(200).end(JSON.stringify(result.value));
+            res.status(200);
+            res.json(result.value);
           }
         });
       }
@@ -83,7 +84,8 @@ router.all('/:id', (req, res, next) => {
             res.status(404).end('404 error. Try again.');
             console.log('put error', err);
           } else {
-            res.status(202).end(JSON.stringify(result.value));
+            res.status(202);
+            res.json(result.value);
           }
         });
       }
@@ -97,7 +99,6 @@ router.all('/', (request, response, next) => {
       if(err) {
         console.log('DB error', err);
       } else {
-        console.log('DB success');
         let dbase = db.db("hw3db");
         let collectionName = '';
         if(request.baseUrl === '/browsers') {
@@ -116,7 +117,7 @@ router.all('/', (request, response, next) => {
           if(err) {
             console.log('toarr error', err);
           } else {
-            response.end(JSON.stringify(result));
+            response.json(result);
           }
         });
       }
@@ -133,7 +134,6 @@ router.all('/', (request, response, next) => {
       if(err) {
         console.log('DB error', err);
       } else {
-        console.log('DB success');
         let dbase = db.db("hw3db");
         let obj = request.body;
         let collection = dbase.collection(obj.metricName.toLowerCase());
@@ -148,7 +148,7 @@ router.all('/', (request, response, next) => {
             console.log('insert error', err);
           } else {
             obj.data["_id"] = res.insertedId;
-            response.end(JSON.stringify(obj.data));
+            response.json(obj.data);
           }
         });
       }

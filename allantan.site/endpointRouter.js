@@ -41,7 +41,7 @@ router.all('/', (request, response, next) => {
           if(err) {
             console.log('toarr error', err);
           } else {
-            response.end(result);
+            response.end(JSON.stringify(result));
           }
         });
       }

@@ -447,7 +447,6 @@ function reportPerf(measureName, data, customProperties = {}) {
     console.log(payload);
 
     if(payload.metricName === "initialBrowserData") {
-	    console.log('posting initialBrowserData');
 	    let browserData = {};
 	    fetch('https://allantan.site/api/browsers', {
 		    method: 'POST',
@@ -459,6 +458,30 @@ function reportPerf(measureName, data, customProperties = {}) {
       .then(response => response.json())
       .then(data => console.log('success: ', data))
       .catch(error => console.log('error: ', error));
+    } else if(payload.metricName === "navigationTiming") {
+
+    } else if(payload.metricName === "networkInformation") {
+
+    } else if(payload.metricName === "storageEstimate") {
+      
+    } else if(payload.metricName === "fp") {
+      
+    } else if(payload.metricName === "fcp") {
+      
+    } else if(payload.metricName === "fid") {
+      
+    } else if(payload.metricName === "lcp") {
+      
+    } else if(payload.metricName === "lcpFinal") {
+      
+    } else if(payload.metricName === "cls") {
+      
+    } else if(payload.metricName === "clsFinal") {
+      
+    } else if(payload.metricName === "tbt") {
+      
+    } else if(payload.metricName === "dataConsumption") {
+      
     }
   });
 }

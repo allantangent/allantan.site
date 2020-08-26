@@ -21,8 +21,20 @@ app.options('*', function(req, res) {
 });
 
 // endpoints
-const browserRoutes = require('./routes/browsers');
-app.use('/browsers', browserRoutes);
+const endpointRoutes = require('./endpointRouter');
+app.use('/browsers', endpointRoutes);
+app.use('/storage', endpointRoutes);
+app.use('/dataconsumption', endpointRoutes);
+app.use('/fp', endpointRoutes);
+app.use('/fcp', endpointRoutes);
+app.use('/fid', endpointRoutes);
+app.use('/lcp', endpointRoutes);
+app.use('/lcpfinal', endpointRoutes);
+app.use('/cls', endpointRoutes);
+app.use('/clsfinal', endpointRoutes);
+app.use('/tbt', endpointRoutes);
+app.use('/navtiming', endpointRoutes);
+app.use('/networkinfo', endpointRoutes);
 
 server.listen(port, (err) => {
 	if (err) {

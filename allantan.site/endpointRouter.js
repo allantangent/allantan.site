@@ -8,7 +8,31 @@ const MongoClient = mongodb.MongoClient;
 const url = 'mongodb://127.0.0.1:27017/';
 
 router.get('/:id', (req, res, next) => {
-	res.send('your id is: ' + req.params.id);
+	MongoClient.connect(url, (err, db) => {
+    if(err) {
+      console.log('db connection error', err);
+    } else {
+      let dbase = db.db('hw3db');
+      let collectionName = '';
+      if(request.baseUrl === '/browsers') {
+        collectionName = 'initialBrowserData';
+      } else if(request.baseUrl === '/storage') {
+        collectionName = 'storageEstimate';
+      } else if(request.baseUrl === '/navtiming') {
+        collectionName = 'navigationTiming';
+      } else if(request.baseUrl === '/networkinfo') {
+        collectionName = 'networkInformation';
+      } else {
+        collectionName = request.baseUrl.substr(1);
+      }
+      let foundItem = dbase.collection(collectionName).find(ObjectId(req.params.id));
+      if(foundItem) {
+        res.end(JSON.stringify(foundItem));
+      } else {
+        res.statusCode(404).end();
+      }
+    }
+  });
 });
 
 router.all('/', (request, response, next) => {
@@ -33,7 +57,7 @@ router.all('/', (request, response, next) => {
         }
         dbase.createCollection(collectionName, (err, res) => {
           if(err) {
-            console.log('collection error', err);
+            console.log('create collection error', err);
           }
         });
         let collection = dbase.collection(collectionName);

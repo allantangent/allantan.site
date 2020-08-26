@@ -137,6 +137,12 @@ router.all('/', (request, response, next) => {
         let dbase = db.db("hw3db");
         let obj = request.body;
         let collection = dbase.collection(obj.metricName.toLowerCase());
+        if(typeof obj.data !== 'object') {
+          let temp = obj.data;
+          obj.data = {
+            data: temp
+          }
+        }
         collection.insertOne(JSON.parse(obj.data), (err, res) => {
           if(err) {
             console.log('insert error', err);

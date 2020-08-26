@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const mongodb = require('mongodb');
+const ObjectId = mongodb.ObjectID;
 
 // init mongodb
 const MongoClient = mongodb.MongoClient;

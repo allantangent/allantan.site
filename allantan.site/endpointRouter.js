@@ -14,13 +14,13 @@ router.get('/:id', (req, res, next) => {
     } else {
       let dbase = db.db('hw3db');
       let collectionName = '';
-      if(request.baseUrl === '/browsers') {
+      if(req.baseUrl === '/browsers') {
         collectionName = 'initialBrowserData';
-      } else if(request.baseUrl === '/storage') {
+      } else if(req.baseUrl === '/storage') {
         collectionName = 'storageEstimate';
-      } else if(request.baseUrl === '/navtiming') {
+      } else if(req.baseUrl === '/navtiming') {
         collectionName = 'navigationTiming';
-      } else if(request.baseUrl === '/networkinfo') {
+      } else if(req.baseUrl === '/networkinfo') {
         collectionName = 'networkInformation';
       } else {
         collectionName = request.baseUrl.substr(1);

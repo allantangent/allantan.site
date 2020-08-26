@@ -18,7 +18,8 @@ router.all('/', (req, res, next) => {
 		fs.readFile(__dirname + '/browserdb.json', 'utf8', (err, data) => {
 			data = JSON.parse(data);
 			req.body["id"] = data["browsers"].length + 1;
-			data["browsers"].push(req.body);
+      data["browsers"].push(req.body);
+      fs.writeFile(__dirname + '/browserdb.json', JSON.stringify(data));
 			res.end(JSON.stringify(req.body));
 		});
 	} else if(req.method === 'DELETE') {

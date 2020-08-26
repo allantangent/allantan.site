@@ -29,7 +29,7 @@ router.get('/:id', (req, res, next) => {
       let foundItem = dbase.collection(collectionName).find(ObjectId(req.params.id));
       if(foundItem) {
         foundItem.toArray((err, result) => {
-          res.end(JSON.stringify(result));
+          res.end(JSON.stringify(result[0]));
         });
       } else {
         res.statusCode(404).end();

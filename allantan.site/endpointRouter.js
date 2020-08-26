@@ -36,7 +36,7 @@ router.all('/', (req, res, next) => {
             console.log('collection error', err);
           }
         });
-        let collection = db.collection(collectionName);
+        let collection = dbase.collection(collectionName);
         collection.find().toArray((err, result) => {
           if(err) {
             console.log('toarr error', err);
@@ -66,7 +66,7 @@ router.all('/', (req, res, next) => {
             console.log('collection error', err);
           }
         });
-        let collection = db.collection(obj.name);
+        let collection = dbase.collection(obj.name);
         collection.insertOne(obj.data, (err, res) => {
           if(err) {
             console.log('insert error', err);

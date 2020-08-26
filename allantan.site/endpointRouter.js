@@ -27,14 +27,15 @@ router.all('/:id', (req, res, next) => {
         } else {
           collectionName = request.baseUrl.substr(1);
         }
-        let foundItem = dbase.collection(collectionName).find(ObjectId(req.params.id));
-        if(foundItem) {
-          foundItem.toArray((err, result) => {
-            res.json(result[0]);
-          });
-        } else {
-          res.statusCode(404).end();
-        }
+        dbase.collection(collectionName).findOne( { "_id": ObjectId(req.params.id) }, (err, result) => {
+          if(err) {
+            res.status(404).end('404 error. Try again.');
+            console.log('get error', err);
+          } else {
+            res.status(200);
+            res.json(result.value);
+          }
+        });
       }
     });
   } else if(req.method === 'DELETE') {

@@ -143,7 +143,7 @@ router.all('/', (request, response, next) => {
             data: temp
           }
         }
-        collection.insertOne(JSON.parse(obj.data), (err, res) => {
+        collection.insertOne(obj.data, (err, res) => {
           if(err) {
             console.log('insert error', err);
           } else {

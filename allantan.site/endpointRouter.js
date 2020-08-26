@@ -28,7 +28,7 @@ router.all('/:id', (req, res, next) => {
           collectionName = request.baseUrl.substr(1);
         }
         dbase.collection(collectionName).findOne( { "_id": ObjectId(req.params.id) }, (err, result) => {
-          if(err) {
+          if(err || result == null) {
             res.status(404).end('404 error. Try again.');
             console.log('get error', err);
           } else {

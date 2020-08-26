@@ -55,12 +55,12 @@ router.all('/:id', (req, res, next) => {
         } else {
           collectionName = request.baseUrl.substr(1);
         }
-        dbase.collection(collectionName).deleteOne({ "_id": ObjectId(req.params.id) }, (err, result) => {
+        dbase.collection(collectionName).findOneAndDelete({ "_id": ObjectId(req.params.id) }, (err, result) => {
           if(err) {
-            res.status(404).end();
+            res.status(404).end('404 error. Try again.');
             console.log('delete error', err);
           } else {
-            res.status(200).end();
+            res.status(200).end(JSON.stringify(result));
           }
         });
       }
@@ -83,7 +83,7 @@ router.all('/:id', (req, res, next) => {
             res.status(404).end('404 error. Try again.');
             console.log('put error', err);
           } else {
-            res.status(202).end(JSON.stringify(result));
+            res.status(202).end(JSON.stringify(result.value));
           }
         });
       }

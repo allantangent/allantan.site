@@ -55,7 +55,7 @@ router.all('/:id', (req, res, next) => {
         } else {
           collectionName = request.baseUrl.substr(1);
         }
-        let deleted = dbcase.collection(collectionName).deleteOne(ObjectId(req.params.id));
+        let deleted = dbase.collection(collectionName).deleteOne(ObjectId(req.params.id));
         if(deleted) {
           res.statusCode(200).end();
         } else {

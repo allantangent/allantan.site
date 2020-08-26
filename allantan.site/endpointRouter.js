@@ -55,7 +55,7 @@ router.all('/:id', (req, res, next) => {
         } else {
           collectionName = request.baseUrl.substr(1);
         }
-        dbase.collection(collectionName).deleteOne(ObjectId(req.params.id), (err, result) => {
+        dbase.collection(collectionName).deleteOne({ "_id": ObjectId(req.params.id) }, (err, result) => {
           if(err) {
             res.status(404).end();
             console.log('delete error', err);

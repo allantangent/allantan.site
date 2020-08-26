@@ -8,34 +8,80 @@ const ObjectId = mongodb.ObjectID;
 const MongoClient = mongodb.MongoClient;
 const url = 'mongodb://127.0.0.1:27017/';
 
-router.get('/:id', (req, res, next) => {
-	MongoClient.connect(url, (err, db) => {
-    if(err) {
-      console.log('db connection error', err);
-    } else {
-      let dbase = db.db('hw3db');
-      let collectionName = '';
-      if(req.baseUrl === '/browsers') {
-        collectionName = 'initialBrowserData';
-      } else if(req.baseUrl === '/storage') {
-        collectionName = 'storageEstimate';
-      } else if(req.baseUrl === '/navtiming') {
-        collectionName = 'navigationTiming';
-      } else if(req.baseUrl === '/networkinfo') {
-        collectionName = 'networkInformation';
+router.all('/:id', (req, res, next) => {
+  if(req.method === 'GET') {
+    MongoClient.connect(url, (err, db) => {
+      if(err) {
+        console.log('db connection error', err);
       } else {
-        collectionName = request.baseUrl.substr(1);
+        let dbase = db.db('hw3db');
+        let collectionName = '';
+        if(req.baseUrl === '/browsers') {
+          collectionName = 'initialbrowserdata';
+        } else if(req.baseUrl === '/storage') {
+          collectionName = 'storageestimate';
+        } else if(req.baseUrl === '/navtiming') {
+          collectionName = 'navigationtiming';
+        } else if(req.baseUrl === '/networkinfo') {
+          collectionName = 'networkinformation';
+        } else {
+          collectionName = request.baseUrl.substr(1);
+        }
+        let foundItem = dbase.collection(collectionName).find(ObjectId(req.params.id));
+        if(foundItem) {
+          foundItem.toArray((err, result) => {
+            res.end(JSON.stringify(result[0]));
+          });
+        } else {
+          res.statusCode(404).end();
+        }
       }
-      let foundItem = dbase.collection(collectionName).find(ObjectId(req.params.id));
-      if(foundItem) {
-        foundItem.toArray((err, result) => {
-          res.end(JSON.stringify(result[0]));
+    });
+  } else if(req.method === 'DELETE') {
+    MongoClient.connect(url, (err, db) => {
+      if(err) {
+        console.log('db connection error', err);
+      } else {
+        let dbase = db.db('hw3db');
+        let collectionName = '';
+        if(req.baseUrl === '/browsers') {
+          collectionName = 'initialbrowserdata';
+        } else if(req.baseUrl === '/storage') {
+          collectionName = 'storageestimate';
+        } else if(req.baseUrl === '/navtiming') {
+          collectionName = 'navigationtiming';
+        } else if(req.baseUrl === '/networkinfo') {
+          collectionName = 'networkinformation';
+        } else {
+          collectionName = request.baseUrl.substr(1);
+        }
+        let deleted = dbcase.collection(collectionName).deleteOne(ObjectId(req.params.id));
+        if(deleted) {
+          res.statusCode(200).end();
+        } else {
+          res.statusCode(404).end();
+        }
+      }
+    });
+  } else if(req.method === 'PUT') {
+    MongoClient.connect(url, (err, db) => {
+      if(err) {
+        console.log('db connection error', err);
+      } else {
+        let dbase = db.db('hw3db');
+        let newVal = {
+          $set: req.body.data,
+        }
+        dbase.collection(req.body.name.toLowerCase()).update(ObjectId(req.params.id), newVal, (err, result) => {
+          if(err) {
+            res.statusCode(404).end();
+          } else {
+            res.statusCode(202).end();
+          }
         });
-      } else {
-        res.statusCode(404).end();
       }
-    }
-  });
+    });
+  }
 });
 
 router.all('/', (request, response, next) => {
@@ -48,21 +94,16 @@ router.all('/', (request, response, next) => {
         let dbase = db.db("hw3db");
         let collectionName = '';
         if(request.baseUrl === '/browsers') {
-          collectionName = 'initialBrowserData';
+          collectionName = 'initialbrowserdata';
         } else if(request.baseUrl === '/storage') {
-          collectionName = 'storageEstimate';
+          collectionName = 'storageestimate';
         } else if(request.baseUrl === '/navtiming') {
-          collectionName = 'navigationTiming';
+          collectionName = 'navigationtiming';
         } else if(request.baseUrl === '/networkinfo') {
-          collectionName = 'networkInformation';
+          collectionName = 'networkinformation';
         } else {
           collectionName = request.baseUrl.substr(1);
         }
-        dbase.createCollection(collectionName, (err, res) => {
-          if(err) {
-            console.log('create collection error', err);
-          }
-        });
         let collection = dbase.collection(collectionName);
         collection.find().toArray((err, result) => {
           if(err) {
@@ -88,12 +129,7 @@ router.all('/', (request, response, next) => {
         console.log('DB success');
         let dbase = db.db("hw3db");
         let obj = request.body;
-        dbase.createCollection( obj.name, (err, res) => {
-          if(err) {
-            console.log('collection error', err);
-          }
-        });
-        let collection = dbase.collection(obj.name);
+        let collection = dbase.collection(obj.name.toLowerCase());
         collection.insertOne(obj.data, (err, res) => {
           if(err) {
             console.log('insert error', err);
@@ -114,10 +150,6 @@ router.all('/', (request, response, next) => {
 			res.end(JSON.stringify(req.body));
     });
     */
-	} else if(request.method === 'DELETE') {
-
-	} else if(request.method === 'PUT') {
-
 	}
 });
 

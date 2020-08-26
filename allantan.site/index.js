@@ -4,6 +4,7 @@ const app = express();
 const server = require('http').Server(app);
 const port = 3000;
 const helmet = require('helmet');
+const mongodb = require('mongodb');
 
 app.use(helmet());
 app.use(bodyParser.json());
@@ -18,6 +19,88 @@ app.use((req, res, next) => {
 
 app.options('*', function(req, res) {
 	res.send(200);
+});
+
+// init mongodb
+const MongoClient = mongodb.MongoClient;
+const url = 'mongodb://127.0.0.1:27017/';
+MongoClient.connect(url, (err, db) => {
+  if(err) {
+    console.log('db connection error', err);
+  } else {
+    let dbase = db.db('hw3db');
+    dbase.createCollection('initialbrowserdata', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('storageestimate', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('dataconsumption', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('fp', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('fcp', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('fid', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('lcp', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('lcpfinal', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('cls', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('clsfinal', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('tbt', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('navigationtiming', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('networkinformation', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+    dbase.createCollection('errors', (err, res) => {
+      if(err) {
+        console.log('create collection error', err);
+      }
+    });
+  }
+  db.close();
 });
 
 // endpoints

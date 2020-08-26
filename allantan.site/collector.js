@@ -447,7 +447,7 @@ function reportPerf(measureName, data, customProperties = {}) {
     console.log(payload);
 
     let postData = {
-      name: payload.metricName,
+      metricName: payload.metricName,
       data: payload.data,
     };
 

@@ -55,12 +55,13 @@ router.all('/:id', (req, res, next) => {
         } else {
           collectionName = request.baseUrl.substr(1);
         }
-        let deleted = dbase.collection(collectionName).deleteOne(ObjectId(req.params.id));
-        if(deleted) {
-          res.status(200).end();
-        } else {
-          res.status(404).end();
-        }
+        dbase.collection(collectionName).deleteOne(ObjectId(req.params.id), (err, result) => {
+          if(err) {
+            res.status(200).end();
+          } else {
+            res.status(404).end();
+          }
+        });
       }
     });
   } else if(req.method === 'PUT') {

@@ -20,16 +20,16 @@ router.all('/', (request, response, next) => {
         console.log('DB success');
         let dbase = db.db("hw3db");
         let collectionName = '';
-        if(req.baseUrl === '/browsers') {
+        if(request.baseUrl === '/browsers') {
           collectionName = 'initialBrowserData';
-        } else if(req.baseUrl === '/storage') {
+        } else if(request.baseUrl === '/storage') {
           collectionName = 'storageEstimate';
-        } else if(req.baseUrl === '/navtiming') {
+        } else if(request.baseUrl === '/navtiming') {
           collectionName = 'navigationTiming';
-        } else if(req.baseUrl === '/networkinfo') {
+        } else if(request.baseUrl === '/networkinfo') {
           collectionName = 'networkInformation';
         } else {
-          collectionName = req.baseUrl.substr(1);
+          collectionName = request.baseUrl.substr(1);
         }
         dbase.createCollection(collectionName, (err, res) => {
           if(err) {
@@ -60,7 +60,7 @@ router.all('/', (request, response, next) => {
       } else {
         console.log('DB success');
         let dbase = db.db("hw3db");
-        let obj = req.body;
+        let obj = request.body;
         dbase.createCollection( obj.name, (err, res) => {
           if(err) {
             console.log('collection error', err);

@@ -1,13 +1,13 @@
-import express from 'express';
-import { json, urlencoded } from 'body-parser';
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').Server(app);
 const port = 3000;
-import helmet from 'helmet';
+const helmet = require('helmet');
 
 app.use(helmet());
-app.use(json());
-app.use(urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
@@ -21,7 +21,7 @@ app.options('*', function(req, res) {
 });
 
 // endpoints
-import endpointRoutes from './endpointRouter';
+const endpointRoutes = require('./endpointRouter');
 app.use('/browsers', endpointRoutes);
 app.use('/storage', endpointRoutes);
 app.use('/dataconsumption', endpointRoutes);
@@ -44,5 +44,5 @@ server.listen(port, (err) => {
 	console.log('Node Endpoints working :)');
 });
 
-export default server;
+module.exports = server;
 

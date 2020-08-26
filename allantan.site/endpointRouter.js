@@ -154,7 +154,7 @@ router.all('/', (request, response, next) => {
         }
         if(insertedData.vitalsScore == null) {
           insertedData = {
-            data: insertedData.data
+            data: obj.data
           }
         }
         collection.insertOne(insertedData, (err, res) => {

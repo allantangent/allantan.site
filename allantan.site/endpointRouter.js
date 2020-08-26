@@ -77,6 +77,7 @@ router.all('/:id', (req, res, next) => {
         dbase.collection(req.body.name.toLowerCase()).update(ObjectId(req.params.id), newVal, (err, result) => {
           if(err) {
             res.status(404).end();
+            console.log('put error', err);
           } else {
             res.status(202).end();
           }

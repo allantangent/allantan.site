@@ -449,7 +449,7 @@ function reportPerf(measureName, data, customProperties = {}) {
     let postData = {
       metricName: payload.metricName,
       data: payload.data,
-      vitalsScore?: payload.vitalsScore,
+      vitalsScore: payload.vitalsScore,
     };
 
     let routeStr = '';

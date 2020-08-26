@@ -9,6 +9,10 @@ const MongoClient = mongodb.MongoClient;
 const url = 'mongodb://127.0.0.1:27017/';
 
 router.all('/:id', (req, res, next) => {
+  if(req.params.id.length != 12) {
+    res.status(404).end('404 error. Try again.');
+    return;
+  }
   if(req.method === 'GET') {
     MongoClient.connect(url, (err, db) => {
       if(err) {
@@ -26,10 +30,6 @@ router.all('/:id', (req, res, next) => {
           collectionName = 'networkinformation';
         } else {
           collectionName = request.baseUrl.substr(1);
-        }
-        if(req.params.id.length != 12) {
-          res.status(404).end('404 error. Try again.');
-          return;
         }
         dbase.collection(collectionName).findOne( { "_id": ObjectId(req.params.id) }, (err, result) => {
           if(err || result == null) {

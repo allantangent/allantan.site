@@ -71,15 +71,16 @@ router.all('/:id', (req, res, next) => {
         console.log('db connection error', err);
       } else {
         let dbase = db.db('hw3db');
-        let newVal = {
-          $set: req.body.data,
+        let options = {
+          returnOriginal: false
         }
-        dbase.collection(req.body.name.toLowerCase()).update(ObjectId(req.params.id), newVal, (err, result) => {
+        dbase.collection(req.body.name.toLowerCase()).findOneAndUpdate( {"_id": ObjectId(req.params.id) }, 
+        req.body.data, options, (err, result) => {
           if(err) {
-            res.status(404).end();
+            res.status(404).end('404 error. Try again.');
             console.log('put error', err);
           } else {
-            res.status(202).end();
+            res.status(202).end(JSON.stringify(result));
           }
         });
       }

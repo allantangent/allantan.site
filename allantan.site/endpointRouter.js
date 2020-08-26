@@ -146,9 +146,6 @@ router.all('/', (request, response, next) => {
           data: obj.data,
           vitalsScore: obj.vitalsScore
         }
-        if(typeof insertedData.data !== 'object') {
-          insertedData.data = { data: insertedData.data };
-        }
         if(insertedData.vitalsScore == null) {
           delete insertedData.vitalsScore
         }

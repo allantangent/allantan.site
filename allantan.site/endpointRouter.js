@@ -29,6 +29,7 @@ router.all('/:id', (req, res, next) => {
         }
         if(req.params.id.length != 12) {
           res.status(404).end('404 error. Try again.');
+          return;
         }
         dbase.collection(collectionName).findOne( { "_id": ObjectId(req.params.id) }, (err, result) => {
           if(err || result == null) {

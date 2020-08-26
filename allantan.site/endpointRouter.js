@@ -58,7 +58,7 @@ router.all('/', (req, res, next) => {
         console.log('DB error', err);
       } else {
         console.log('DB success');
-        let obj = JSON.parse(req.body);
+        let obj = req.body;
         db.createCollection( obj.name, (err, res) => {
           if(err) {
             console.log('collection error', err);

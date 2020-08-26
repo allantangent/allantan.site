@@ -57,9 +57,9 @@ router.all('/:id', (req, res, next) => {
         }
         let deleted = dbase.collection(collectionName).deleteOne(ObjectId(req.params.id));
         if(deleted) {
-          res.statusCode(200).end();
+          res.status(200).end();
         } else {
-          res.statusCode(404).end();
+          res.status(404).end();
         }
       }
     });
@@ -74,9 +74,9 @@ router.all('/:id', (req, res, next) => {
         }
         dbase.collection(req.body.name.toLowerCase()).update(ObjectId(req.params.id), newVal, (err, result) => {
           if(err) {
-            res.statusCode(404).end();
+            res.status(404).end();
           } else {
-            res.statusCode(202).end();
+            res.status(202).end();
           }
         });
       }

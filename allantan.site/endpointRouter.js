@@ -5,7 +5,7 @@ const mongodb = require('mongodb');
 
 // init mongodb
 const MongoClient = mongodb.MongoClient;
-const url = 'mongodb://127.0.0.1:27017/hw3db';
+const url = 'mongodb://127.0.0.1:27017/';
 
 router.get('/:id', (req, res, next) => {
 	res.send('your id is: ' + req.params.id);
@@ -18,6 +18,7 @@ router.all('/', (req, res, next) => {
         console.log('DB error', err);
       } else {
         console.log('DB success');
+        let dbase = db.db("hw3db");
         let collectionName = '';
         if(req.baseUrl === '/browsers') {
           collectionName = 'initialBrowserData';
@@ -30,7 +31,7 @@ router.all('/', (req, res, next) => {
         } else {
           collectionName = req.baseUrl.substr(1);
         }
-        db.createCollection(collectionName, (err, res) => {
+        dbase.createCollection(collectionName, (err, res) => {
           if(err) {
             console.log('collection error', err);
           }
@@ -58,8 +59,9 @@ router.all('/', (req, res, next) => {
         console.log('DB error', err);
       } else {
         console.log('DB success');
+        let dbase = db.db("hw3db");
         let obj = req.body;
-        db.createCollection( obj.name, (err, res) => {
+        dbase.createCollection( obj.name, (err, res) => {
           if(err) {
             console.log('collection error', err);
           }

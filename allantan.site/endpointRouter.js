@@ -11,7 +11,7 @@ router.get('/:id', (req, res, next) => {
 	res.send('your id is: ' + req.params.id);
 });
 
-router.all('/', (req, res, next) => {
+router.all('/', (request, response, next) => {
 	if(req.method === 'GET') {
     MongoClient.connect(url, (err, db) => {
       if(err) {
@@ -41,7 +41,7 @@ router.all('/', (req, res, next) => {
           if(err) {
             console.log('toarr error', err);
           } else {
-            res.end(result);
+            response.end(result);
           }
         });
       }
@@ -72,7 +72,7 @@ router.all('/', (req, res, next) => {
             console.log('insert error', err);
           } else {
             obj.data["_id"] = res.insertedId;
-            res.end(JSON.stringify(obj.data));
+            response.end(JSON.stringify(obj.data));
           }
         });
       }

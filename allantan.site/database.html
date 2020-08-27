@@ -7,8 +7,12 @@
   <script src="https://cdn.zinggrid.com/zinggrid.min.js"></script>
 </head>
 <body>
-  <zing-grid editor context-menu>
+  <zing-grid editor context-menu="mymenu">
+    <zg-header>Initial Browser Data</zg-header>
     <zg-data src="https://allantan.site/api/browsers" idKey="id"></zg-data>
+    <zg-menu id="mymenu" replace="true">
+      <zg-button action="copycell">Copy Cell</zg-button>
+    </zg-menu>
   </zing-grid>
 </body>
 </html>

@@ -29,15 +29,17 @@
       'Other': 0,
     }
     let total = 0;
+    let windowsCount = 0;
     // get browser data
     fetch('https://allantan.site/api/browsers')
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       for(let obj in data) {
-        console.log(obj);
-        if(obj.userAgent.includes("Windows")) {
+        console.log(data[obj]);
+        if(data[obj].userAgent.includes("Windows")) {
           osCount['Windows']++;
-        } else if(obj.userAgent.includes("Android")) {
+        } else if(data[obj].userAgent.includes("Android")) {
           osCount['Android']++;
         } else {
           osCount['Other']++;
@@ -48,7 +50,9 @@
       for(let os in osCount) {
         total += osCount[os];
       }
+      let windowsCount = osCount['Windows'] / total * 100;
     });
+    
     let chartConfig = {
       type: 'pie',
       backgroundColor: '#2B313B',
@@ -102,7 +106,7 @@
       series: [
         {
           text: 'Windows',
-          values: [osCount['Windows'] / total],
+          values: [windowsCount],
           backgroundColor: '#FF7965'
         },
         {
@@ -128,7 +132,7 @@
       data: chartConfig,
       height: '100%',
       width: '100%',
-});
+    });
   </script>
 </body>
 </html>

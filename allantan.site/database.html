@@ -5,10 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>database</title>
   <script src="https://cdn.zinggrid.com/zinggrid.min.js"></script>
+  <style>
+    zg-caption {
+      background-color: darkorange;
+      color: white;
+      font-weight: bold;
+      opacity: 0.6;
+      text-align: center;
+      transition: 0.3s opacity;
+      font-size: 2rem;
+    }
+  </style>
 </head>
 <body>
-  <zing-grid src="https://allantan.site/api/browsers" editor context-menu="mymenu">
-    <zg-header>Initial Browser Data</zg-header>
+  <zing-grid src="https://allantan.site/api/browsers" caption="Initial Browser Data" context-menu="mymenu">
     <zg-menu id="mymenu" replace="true">
       <zg-button action="copycell">Copy Cell</zg-button>
     </zg-menu>

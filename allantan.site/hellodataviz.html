@@ -22,11 +22,37 @@
     
   </div>
   <script>
+    // get browser data
+    fetch('https://allantan.site/api/browsers')
+    .then(response => response.json())
+    .then(data => {
+      let osCount = {
+        'Windows': 0,
+        'Android': 0,
+        'iOS': 0,
+        'Other': 0,
+      }
+      for(let obj in data) {
+        if(obj.userAgent.includes("Windows")) {
+          osCount['Windows']++;
+        } else if(obj.userAgent.includes("Android")) {
+          osCount['Android']++;
+        } else {
+          osCount['Other']++;
+        }
+      }
+
+      // calculate averages
+      let total = 0;
+      for(let os in osCount) {
+        total += osCount[os];
+      }
+    });
     let chartConfig = {
       type: 'pie',
       backgroundColor: '#2B313B',
       title: {
-        text: 'Site Browser Usage',
+        text: 'Different Operating Systems Accessing This Site',
         align: 'left',
         fontColor: '#fff',
         fontFamily: 'Open Sans',
@@ -74,35 +100,28 @@
       },
       series: [
         {
-          text: 'IE and Edge',
-          values: [1],
-          backgroundColor: '#50ADF5'
-        },
-        {
-          text: 'Chrome',
-          values: [90],
+          text: 'Windows',
+          values: [osCount['Windows'] / total],
           backgroundColor: '#FF7965'
         },
         {
-          text: 'Firefox',
-          values: [3],
+          text: 'Android',
+          values: [osCount['Android'] / total],
           backgroundColor: '#FFCB45'
         },
         {
           text: 'Safari',
-          values: [3],
+          values: [osCount['iOS'] / total],
           backgroundColor: '#6877e5'
         },
         {
           text: 'Other',
-          values: [3],
+          values: [osCount['Other'] / total],
           backgroundColor: '#6FB07F'
         }
       ]
     };
 
-    // RENDER CHARTS
-    // -----------------------------
     zingchart.render({
       id: 'myChart',
       data: chartConfig,

@@ -144,12 +144,12 @@ router.all('/', (request, response, next) => {
         let dbase = db.db("hw3db");
         let obj = request.body;
         let collection = dbase.collection(obj.metricName.toLowerCase());
-        let insertedData = {
-          data: obj.data,
-          vitalsScore: obj.vitalsScore
+        let insertedData = {};
+        for(let prop in obj.data) {
+          insertedData[prop] = obj.data[prop];
         }
-        if(insertedData.vitalsScore == null) {
-          delete insertedData.vitalsScore
+        if(obj.vitalsScore != null) {
+          insertedData.vitalsScore = obj.vitalsScore;
         }
         collection.insertOne(insertedData, (err, res) => {
           if(err) {

@@ -145,11 +145,19 @@ router.all('/', (request, response, next) => {
         let obj = request.body;
         let collection = dbase.collection(obj.metricName.toLowerCase());
         let insertedData = {};
-        for(let prop in obj.data) {
-          insertedData[prop] = obj.data[prop];
+        if(typeof obj.data === 'object') {
+          for(let prop in obj.data) {
+            insertedData[prop] = obj.data[prop];
+          }
+        } else {
+          for(let prop in obj) {
+            insertedData[prop] = obj[prop];
+          }
         }
         if(obj.vitalsScore != null) {
           insertedData.vitalsScore = obj.vitalsScore;
+        } else {
+          delete insertedData.vitalsScore;
         }
         collection.insertOne(insertedData, (err, res) => {
           if(err) {

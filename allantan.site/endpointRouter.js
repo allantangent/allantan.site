@@ -153,6 +153,7 @@ router.all('/', (request, response, next) => {
           for(let prop in obj) {
             insertedData[prop] = obj[prop];
           }
+          delete insertedData.metricName;
         }
         if(obj.vitalsScore != null) {
           insertedData.vitalsScore = obj.vitalsScore;

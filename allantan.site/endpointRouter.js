@@ -60,7 +60,7 @@ router.all('/:id', (req, res, next) => {
         } else if(req.baseUrl === '/networkinfo') {
           collectionName = 'networkinformation';
         } else {
-          collectionName = request.baseUrl.substr(1);
+          collectionName = req.baseUrl.substr(1);
         }
         dbase.collection(collectionName).findOneAndDelete({ "_id": ObjectId(req.params.id) }, (err, result) => {
           if(err) {

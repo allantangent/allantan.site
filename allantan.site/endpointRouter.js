@@ -80,7 +80,7 @@ router.all('/:id', (req, res, next) => {
       } else {
         let dbase = db.db('hw3db');
         let newVal = {
-          $set = {}
+          $set: {}
         };
         if(typeof req.body.data === 'object') {
           for(let prop in req.body.data) {

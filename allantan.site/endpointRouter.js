@@ -90,7 +90,7 @@ router.all('/:id', (req, res, next) => {
           for(let prop in req.body) {
             newVal.$set[prop] = req.body[prop];
           }
-          delete newVal.metricName;
+          delete newVal.$set.metricName;
         }
         if(req.body.vitalsScore != null) {
           newVal.$set.vitalsScore = req.body.vitalsScore;

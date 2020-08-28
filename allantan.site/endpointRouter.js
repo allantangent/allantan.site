@@ -179,8 +179,8 @@ router.all('/', (request, response, next) => {
           if(err) {
             console.log('insert error', err);
           } else {
-            obj.data["_id"] = res.insertedId;
-            response.json(obj.data);
+            insertedData["_id"] = res.insertedId;
+            response.json(insertedData);
           }
         });
       }

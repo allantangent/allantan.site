@@ -79,10 +79,12 @@ router.all('/:id', (req, res, next) => {
         console.log('db connection error', err);
       } else {
         let dbase = db.db('hw3db');
-        let newVal = {};
+        let newVal = {
+          $set = {}
+        };
         if(typeof req.body.data === 'object') {
           for(let prop in req.body.data) {
-            newVal.$set[prop] = req.data[prop];
+            newVal.$set[prop] = req.body.data[prop];
           }
         } else {
           for(let prop in req.body.data) {

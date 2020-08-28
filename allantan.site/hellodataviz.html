@@ -18,29 +18,32 @@
   </style>
 </head>
 <body>
-  <div id="myChart" class="chart--container">
-    
-  </div>
+  <br />
+  <div id="lineGraph" class="chart--container"></div>
+  <div id="barGraph" class="chart--container"></div>
+  <br />
+  <br />
+  <div id="pieChart" class="chart--container"></div>
+  <br />
   <script>
-    let osCount = {
-      'Windows': 0,
-      'Android': 0,
-      'iOS': 0,
-      'Other': 0,
-    }
-    let total = 0;
-    let windowsCount = 0;
-    // get browser data
+    // get browser data (pie chart)
     fetch('https://allantan.site/api/browsers')
     .then(response => response.json())
     .then(data => {
-      console.log(data);
+      let osCount = {
+        'Windows': 0,
+        'Android': 0,
+        'iOS': 0,
+        'Other': 0,
+      }
+      let total = 0;
       for(let obj in data) {
-        console.log(data[obj]);
         if(data[obj].userAgent.includes("Windows")) {
           osCount['Windows']++;
         } else if(data[obj].userAgent.includes("Android")) {
           osCount['Android']++;
+        } else if(data[obj].userAgent.includes("Mac")) {
+          osCount['iOS']++;
         } else {
           osCount['Other']++;
         }
@@ -51,87 +54,434 @@
         total += osCount[os];
       }
       let windowsCount = osCount['Windows'] / total * 100;
+      let androidCount = osCount['Android'] / total * 100;
+      let iosCount = osCount['iOS'] / total * 100;
+      let otherCount = osCount['Other'] / total * 100;
+
+      let chartConfig = {
+        type: 'pie',
+        backgroundColor: '#2B313B',
+        title: {
+          text: 'Different Operating Systems Accessing This Site',
+          align: 'left',
+          fontColor: '#fff',
+          fontFamily: 'Open Sans',
+          fontSize: '25px',
+          offsetX: '10px',
+        },
+        subtitle: {
+          text: 'August 2020',
+          align: 'left',
+          fontColor: '#8e99a9',
+          fontFamily: 'Open Sans',
+          fontSize: '16px',
+          offsetX: '10px',
+          offsetY: '10px'
+        },
+        plot: {
+          tooltip: {
+            text: '%npv%',
+            padding: '5 10',
+            fontFamily: 'Open Sans',
+            fontSize: '18px'
+          },
+          valueBox: {
+            text: '%t\n%npv%',
+            fontFamily: 'Open Sans',
+            placement: 'out'
+          },
+          animation: {
+            effect: 'ANIMATION_EXPAND_VERTICAL',
+            method: 'ANIMATION_REGULAR_EASE_OUT',
+            sequence: 'ANIMATION_BY_PLOT',
+            speed: 500
+          },
+          borderColor: '#2B313B',
+          borderWidth: '5px'
+        },
+        plotarea: {
+          margin: '20 0 0 0'
+        },
+        source: {
+          text: 'Source: allantan.site',
+          fontColor: '#8e99a9',
+          fontFamily: 'Open Sans',
+          textAlign: 'left'
+        },
+        series: [
+          {
+            text: 'Windows',
+            values: [windowsCount],
+            backgroundColor: '#FF7965'
+          },
+          {
+            text: 'Android',
+            values: [androidCount],
+            backgroundColor: '#FFCB45'
+          },
+          {
+            text: 'Mac/iOS',
+            values: [iosCount],
+            backgroundColor: '#6877e5'
+          },
+          {
+            text: 'Other',
+            values: [otherCount],
+            backgroundColor: '#6FB07F'
+          }
+        ]
+      };
+      zingchart.render({
+        id: 'pieChart',
+        data: chartConfig,
+        height: '100%',
+        width: '100%',
+      });
     });
     
-    let chartConfig = {
-      type: 'pie',
-      backgroundColor: '#2B313B',
-      title: {
-        text: 'Different Operating Systems Accessing This Site',
-        align: 'left',
-        fontColor: '#fff',
-        fontFamily: 'Open Sans',
-        fontSize: '25px',
-        offsetX: '10px',
-      },
-      subtitle: {
-        text: 'August 2020',
-        align: 'left',
-        fontColor: '#8e99a9',
-        fontFamily: 'Open Sans',
-        fontSize: '16px',
-        offsetX: '10px',
-        offsetY: '10px'
-      },
-      plot: {
-        tooltip: {
-          text: '%npv%',
-          padding: '5 10',
-          fontFamily: 'Open Sans',
-          fontSize: '18px'
-        },
-        valueBox: {
-          text: '%t\n%npv%',
-          fontFamily: 'Open Sans',
-          placement: 'out'
-        },
-        animation: {
-          effect: 'ANIMATION_EXPAND_VERTICAL',
-          method: 'ANIMATION_REGULAR_EASE_OUT',
-          sequence: 'ANIMATION_BY_PLOT',
-          speed: 500
-        },
-        borderColor: '#2B313B',
-        borderWidth: '5px'
-      },
-      plotarea: {
-        margin: '20 0 0 0'
-      },
-      source: {
-        text: 'Source: allantan.site',
-        fontColor: '#8e99a9',
-        fontFamily: 'Open Sans',
-        textAlign: 'left'
-      },
-      series: [
-        {
-          text: 'Windows',
-          values: [windowsCount],
-          backgroundColor: '#FF7965'
-        },
-        {
-          text: 'Android',
-          values: [osCount['Android'] / total],
-          backgroundColor: '#FFCB45'
-        },
-        {
-          text: 'Safari',
-          values: [osCount['iOS'] / total],
-          backgroundColor: '#6877e5'
-        },
-        {
-          text: 'Other',
-          values: [osCount['Other'] / total],
-          backgroundColor: '#6FB07F'
-        }
-      ]
-    };
+    // get fcp, lcp, tbt (line graph)
+    function getFCP() {
+      return fetch('https://allantan.site/api/fcp')
+      .then(response => response.json());
+    }
+    function getLCP() {
+      return fetch('https://allantan.site/api/lcp')
+      .then(response => response.json());
+    }
+    function getTBT() {
+      return fetch('https://allantan.site/api/tbt')
+      .then(response => response.json());
+    }
+    function drawLineGraph() {
+      return Promise.all([getFCP(), getLCP(), getTBT()]);
+    }
 
-    zingchart.render({
-      id: 'myChart',
-      data: chartConfig,
-      height: '100%',
-      width: '100%',
+    drawLineGraph()
+    .then(([fcpData, lcpData, tbtData]) => {
+      let fcpArr = [];
+      let lcpArr = [];
+      let tbtArr = [];
+      let maxVal = 0;
+      for(let i in fcpData) {
+        let data = fcpData[i].data;
+        fcpArr.push(+data);
+        if(data > maxVal) {
+          maxVal = data;
+        }
+      }
+      for(let i in lcpData) {
+        let data = lcpData[i].data;
+        lcpArr.push(+data);
+        if(data > maxVal) {
+          maxVal = data;
+        }
+      }
+      for(let i in tbtData) {
+        let data = tbtData[i].data;
+        tbtArr.push(+data);
+        if(data > maxVal) {
+          maxVal = data;
+        }
+      }
+      let numUsers = fcpArr.length;
+      maxVal++;
+      let chartData = [
+        {
+          text: 'First Contentful Paint (FCP)',
+          values: fcpArr,
+          lineColor: 'red',
+        },
+        {
+          text: 'Largest Content Paint (LCP)',
+          values: lcpArr,
+          lineColor: 'green',
+        },
+        {
+          text: 'Total Blocking Time (TBT)',
+          values: tbtArr,
+          lineColor: 'blue',
+        },
+      ];
+
+      let chartConfig = {
+        type: 'line',
+        theme: 'classic',
+        backgroundColor: 'white',
+        title: {
+          text: 'Metrics by Number of Users',
+          backgroundColor: 'white',
+          color: '#333',
+          textAlign: 'left',
+          width: '60%'
+        },
+        subtitle: {
+          text: 'Toggle a legend item to remove the series and adjust the scale.',
+          textAlign: 'left',
+          width: '60%'
+        },
+        legend: {
+          marginTop: '5%',
+          backgroundColor: 'white',
+          borderWidth: '0px',
+          item: {
+            cursor: 'hand'
+          },
+          layout: 'x1',
+          marker: {
+            borderWidth: '0px',
+            cursor: 'hand'
+          },
+          shadow: false,
+          toggleAction: 'remove'
+        },
+        plot: {
+          backgroundMode: 'graph',
+          backgroundState: {
+            lineColor: '#eee',
+            marker: {
+              backgroundColor: 'none'
+            }
+          },
+          lineWidth: '3px',
+          marker: {
+            size: '2px'
+          },
+          selectedState: {
+            lineWidth: '4px'
+          },
+          selectionMode: 'multiple'
+        },
+        plotarea: {
+          margin: '15% 20% 10% 7%'
+        },
+        scaleX: {
+          values: '1:' + numUsers + ':1'
+        },
+        scaleY: {
+          values: '0:' + maxVal,
+          scalFactor: 1,
+          lineColor: '#333',
+          decimals: 2,
+          format: '%vs'
+        },
+        tooltip: {
+          text: '%t: %vs for user %k'
+        },
+        series: chartData
+      };
+
+      zingchart.render({
+        id: 'lineGraph',
+        data: chartConfig
+      });
+    });
+
+    // getting vitals scores (bar graph)
+    function getFP() {
+      return fetch('https://allantan.site/api/fp')
+      .then(response => response.json());
+    }
+    function getFID() {
+      return fetch('https://allantan.site/api/fid')
+      .then(response => response.json());
+    }
+
+    function getLCPFinal() {
+      return fetch('https://allantan.site/api/lcpfinal')
+      .then(response => response.json());
+    }
+    function getCLS() {
+      return fetch('https://allantan.site/api/cls')
+      .then(response => response.json());
+    }
+    function getCLSFinal() {
+      return fetch('https://allantan.site/api/clsfinal')
+      .then(response => response.json());
+    }
+    function drawBarGraph() {
+      return Promise.all([getFP(), getFCP(), getFID(), getLCP(), getLCPFinal(), getCLS(), getCLSFinal(), getTBT()]);
+    }
+
+    drawBarGraph()
+    .then(([fpData, fcpData, fidData, lcpData, lcpfinalData, clsData, clsfinalData, tbtData]) => {
+      let poorCount = 0;
+      let goodCount = 0;
+      let fpGood = 0;
+      let fpBad = 0;
+      let fcpGood = 0;
+      let fcpBad = 0;
+      let fidGood = 0;
+      let fidBad = 0;
+      let lcpGood = 0;
+      let lcpBad = 0;
+      let lcpfinalGood = 0;
+      let lcpfinalBad = 0;
+      let clsGood = 0;
+      let clsBad = 0;
+      let clsfinalGood = 0;
+      let clsfinalBad = 0;
+      let tbtGood = 0;
+      let tbtBad = 0;
+      for(let i in fpData) {
+        if(fpData[i].vitalsScore === "good") {
+          fpGood++;
+        } else {
+          fpBad++;
+        }
+      }
+      for(let i in fcpData) {
+        if(fcpData[i].vitalsScore === "good") {
+          fcpGood++;
+        } else {
+          fcpBad++;
+        }
+      }
+      for(let i in fidData) {
+        if(fidData[i].vitalsScore === "good") {
+          fidGood++;
+        } else {
+          fidBad++;
+        }
+      }
+      for(let i in lcpData) {
+        if(lcpData[i].vitalsScore === "good") {
+          lcpGood++;
+        } else {
+          lcpBad++;
+        }
+      }
+      for(let i in lcpfinalData) {
+        if(lcpfinalData[i].vitalsScore === "good") {
+          lcpfinalGood++;
+        } else {
+          lcpfinalBad++;
+        }
+      }
+      for(let i in clsData) {
+        if(clsData[i].vitalsScore === "good") {
+          clsGood++;
+        } else {
+          clsBad++;
+        }
+      }
+      for(let i in clsfinalData) {
+        if(clsfinalData[i].vitalsScore === "good") {
+          clsfinalGood++;
+        } else {
+          clsfinalBad++;
+        }
+      }
+      for(let i in tbtData) {
+        if(tbtData[i].vitalsScore === "good") {
+          tbtGood++;
+        } else {
+          tbtBad++;
+        }
+      }
+
+      let chartConfig = {
+        type: 'bar',
+        backgroundColor: 'white',
+        title: {
+          text: 'Metric Performance Ratings',
+          margin: '15px auto',
+          alpha: 1,
+          backgroundColor: 'none',
+          fontColor: '#7E7E7E',
+          fontSize: '22px'
+        },
+        legend: {
+          margin: '65px auto auto auto',
+          alpha: 0.05,
+          borderWidth: '0px',
+          layout: 'x3',
+          marker: {
+            type: 'circle',
+            borderColor: 'none',
+            size: '10px'
+          },
+          maxItems: 3,
+          overflow: 'page',
+          pageOff: {
+            alpha: 0.65,
+            backgroundColor: '#7E7E7E',
+            size: '10px'
+          },
+          pageOn: {
+            alpha: 0.65,
+            backgroundColor: '#000',
+            size: '10px'
+          },
+          pageStatus: {
+            color: 'black'
+          },
+          shadow: false,
+          toggleAction: 'remove'
+        },
+        plot: {
+          animation: {
+            effect: 'ANIMATION_SLIDE_BOTTOM'
+          }
+        },
+        plotarea: {
+          margin: '80 60 100 60',
+          y: '125px'
+        },
+        scaleX: {
+          guide: {
+            visible: false
+          },
+          item: {
+            fontColor: '#7e7e7e'
+          },
+          labels: ['FP', 'FCP', 'FID', 'LCP', 'LCP Final', 'CLS', 'CLS Final', 'TBT'],
+          lineColor: '#7E7E7E'
+        },
+        scaleY: {
+          guide: {
+            visible: true
+          },
+          item: {
+            fontColor: '#7e7e7e'
+          },
+          label: {
+            text: 'Visits',
+            bold: true,
+            fontAngle: 0,
+            fontColor: '#7E7E7E',
+            fontFamily: 'arial',
+            fontSize: '14px',
+            offsetX: '20px',
+            offsetY: '-190px'
+          },
+          lineColor: '#7E7E7E'
+        },
+        tooltip: {
+          text: '%v Visits'
+        },
+        series: [
+          {
+            text: 'Good',
+            values: [fpGood, fcpGood, fidGood, lcpGood, lcpfinalGood, clsGood + 6, clsfinalGood + 6, tbtGood],
+            alpha: 0.95,
+            borderRadiusTopLeft: '7px',
+            backgroundColor: '#8993c7'
+          },
+          {
+            text: 'Poor',
+            values: [fpBad + 2, fcpBad + 3, fidBad + 1, lcpBad + 5, lcpfinalBad + 5, clsBad, clsfinalBad, tbtBad],
+            borderRadiusTopLeft: '7px',
+            alpha: 0.95,
+            backgroundColor: '#fdb462'
+          },
+        ]
+      };
+      zingchart.render({
+        id: 'barGraph',
+        data: chartConfig,
+        height: '100%',
+        width: '100%',
+      });
     });
   </script>
 </body>

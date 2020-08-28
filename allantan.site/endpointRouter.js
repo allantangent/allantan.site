@@ -79,8 +79,21 @@ router.all('/:id', (req, res, next) => {
         console.log('db connection error', err);
       } else {
         let dbase = db.db('hw3db');
-        let newVal = {
-          $set: req.body.data
+        let newVal = {};
+        if(typeof req.body.data === 'object') {
+          for(let prop in req.body.data) {
+            newVal.$set[prop] = req.data[prop];
+          }
+        } else {
+          for(let prop in req.body.data) {
+            newVal[prop] = req.body[prop];
+          }
+          delete newVal.metricName;
+        }
+        if(req.body.vitalsScore != null) {
+          newVal.$set.vitalsScore = req.body.vitalsScore;
+        } else {
+          delete newVal.vitalsScore;
         }
         let options = {
           returnOriginal: false

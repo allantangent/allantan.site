@@ -443,8 +443,8 @@ function reportPerf(measureName, data, customProperties = {}) {
       navigatorInformation: getNavigatorInfo(),
       vitalsScore: getVitalsScore(measureName, data),
     });
+    
     // TODO: send payload to endpoint
-    console.log(payload);
 
     let postData = {
       metricName: payload.metricName,

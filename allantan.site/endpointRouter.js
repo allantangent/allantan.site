@@ -87,7 +87,7 @@ router.all('/:id', (req, res, next) => {
             newVal.$set[prop] = req.body.data[prop];
           }
         } else {
-          for(let prop in req.body.data) {
+          for(let prop in req.body) {
             newVal.$set[prop] = req.body[prop];
           }
           delete newVal.metricName;

@@ -64,7 +64,7 @@ app.get('/login', function(req, res) {
     res.sendFile('public_html/login.html', { root: __dirname });
 });
 app.post('/login', passport.authenticate('local', 
-    { successRedirect: '/', failureRedirect: 'login'}
+    { successRedirect: 'home', failureRedirect: 'login'}
 ));
  
 // In between: Logout
@@ -74,7 +74,7 @@ app.get('/logout', function(req, res) {
 });
  
 // Private side: Home page
-app.get('/', ensureAuthenticated, function(req, res) {
+app.get('/home', ensureAuthenticated, function(req, res) {
         res.sendFile('public_html/index.html', { root: __dirname });
 });
  

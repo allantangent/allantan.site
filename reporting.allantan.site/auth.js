@@ -75,7 +75,7 @@ app.get('/logout', function(req, res) {
  
 // Private side: Home page
 app.get('/home', ensureAuthenticated, function(req, res) {
-        res.sendFile('public_html/index.html', { root: __dirname });
+        res.sendFile('index.html', { root: __dirname });
 });
  
 app.listen(port);
